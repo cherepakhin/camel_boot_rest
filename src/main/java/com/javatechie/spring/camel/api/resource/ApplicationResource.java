@@ -3,6 +3,8 @@ package com.javatechie.spring.camel.api.resource;
 import org.apache.camel.BeanInject;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -26,13 +28,13 @@ public class ApplicationResource extends RouteBuilder {
 				.bindingMode(RestBindingMode.json);
 
 		rest().get("/hello-world").produces(MediaType.APPLICATION_JSON_VALUE).route()
-				.setBody(constant("Hello world")).endRest();
+				.setBody(constant("Hello world")).log("Get /hello-world").endRest();
 
 		rest().get("/getOrders").produces(MediaType.APPLICATION_JSON_VALUE).route()
-				.setBody(() -> service.getOrders()).endRest();
+				.setBody(() -> service.getOrders()).log("Get /getOrders").endRest();
 
 		rest().post("/addOrder").consumes(MediaType.APPLICATION_JSON_VALUE).type(Order.class)
-				.outType(Order.class).route().process(processor).endRest();
+				.outType(Order.class).route().process(processor).log("Post /addOrder").endRest();
 	}
 
 }
