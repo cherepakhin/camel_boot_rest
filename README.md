@@ -3,7 +3,7 @@
 run app:
 
 ````shell
-mvn spring-boot:run
+./mvnw spring-boot:run
 ````
 
 run tests:
