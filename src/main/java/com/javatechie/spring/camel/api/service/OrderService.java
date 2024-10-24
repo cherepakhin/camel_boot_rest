@@ -19,6 +19,7 @@ public class OrderService {
 
     @PostConstruct
     public void initDB() {
+        list = new ArrayList<>();
         log.info(String.format("initDB"));
         list.add(new Order(67, "Mobile", 6700));
         list.add(new Order(68, "Book", 6800));
