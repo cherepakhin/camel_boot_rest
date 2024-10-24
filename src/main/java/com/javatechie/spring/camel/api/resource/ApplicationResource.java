@@ -1,17 +1,14 @@
 package com.javatechie.spring.camel.api.resource;
 
-import org.apache.camel.BeanInject;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.rest.RestBindingMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
-
 import com.javatechie.spring.camel.api.dto.Order;
 import com.javatechie.spring.camel.api.processor.OrderProcessor;
 import com.javatechie.spring.camel.api.service.OrderService;
+import org.apache.camel.BeanInject;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.rest.RestBindingMode;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationResource extends RouteBuilder {
