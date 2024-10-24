@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OrderServiceTest {
 
@@ -48,6 +48,18 @@ class OrderServiceTest {
         assertEquals(new Order(68, "Book", 6800), orders.get(1));
         assertEquals(new Order(69, "AC", 6900), orders.get(2));
         assertEquals(new Order(70, "Shoes", 70000), orders.get(3));
+    }
+
+    @Test
+    void addOrder() throws Exception {
+        OrderService orderService = new OrderService();
+        int oldLength = orderService.getOrders().size();
+        Order order = orderService.addOrder(new Order(6700, "Mobile10000", 10000));
+
+        assertEquals(new Order(6700, "Mobile10000", 10000), order);
+
+        int newLength = orderService.getOrders().size();
+        assertEquals(oldLength + 1, newLength);
     }
 
 }
