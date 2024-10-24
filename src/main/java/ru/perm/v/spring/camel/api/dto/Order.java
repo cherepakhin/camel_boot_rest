@@ -1,4 +1,4 @@
-package com.javatechie.spring.camel.api.dto;
+package ru.perm.v.spring.camel.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class Order {
 	
-	private int id;
+	private Integer id;
 	private String name;
 	private double price;
 

@@ -1,6 +1,7 @@
-package com.javatechie.spring.camel.api.service;
+package ru.perm.v.spring.camel.api.service;
 
-import com.javatechie.spring.camel.api.dto.Order;
+import ru.perm.v.spring.camel.api.dto.Order;
+import ru.perm.v.spring.camel.api.service.impl.OrderServiceImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,7 +12,7 @@ class OrderServiceTest {
 
     @Test
     void getOrderById() throws Exception {
-        OrderService orderService = new OrderService();
+        OrderServiceImpl orderService = new OrderServiceImpl();
         orderService.initDB();
 
         Order order = orderService.getOrderById(67);
@@ -21,7 +22,7 @@ class OrderServiceTest {
 
     @Test
     void getOrderByNotExistId() throws Exception {
-        OrderService orderService = new OrderService();
+        OrderServiceImpl orderService = new OrderServiceImpl();
         orderService.initDB();
         boolean isError = false;
         try {
@@ -36,7 +37,7 @@ class OrderServiceTest {
 
     @Test
     void initOrdersDB() throws Exception {
-        OrderService orderService = new OrderService();
+        OrderServiceImpl orderService = new OrderServiceImpl();
         orderService.initDB();
         orderService.initDB(); // 2 times for check clear DB
 
@@ -52,7 +53,7 @@ class OrderServiceTest {
 
     @Test
     void getOrders() throws Exception {
-        OrderService orderService = new OrderService();
+        OrderServiceImpl orderService = new OrderServiceImpl();
         orderService.initDB();
 
         List<Order> orders = orderService.getOrders();
@@ -67,7 +68,7 @@ class OrderServiceTest {
 
     @Test
     void addOrder() throws Exception {
-        OrderService orderService = new OrderService();
+        OrderServiceImpl orderService = new OrderServiceImpl();
         int oldLength = orderService.getOrders().size();
         Order order = orderService.addOrder(new Order(6700, "Mobile10000", 10000));
 
