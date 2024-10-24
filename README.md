@@ -13,7 +13,7 @@ http :9090/hello-world
 
 "Welcome to java techie"
 
-http :9090/getOrders
+http http://127.0.0.1:9090/getOrders
 [
     {
         "id": 67,

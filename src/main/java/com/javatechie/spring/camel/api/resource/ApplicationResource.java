@@ -17,7 +17,7 @@ import com.javatechie.spring.camel.api.service.OrderService;
 public class ApplicationResource extends RouteBuilder {
 
 	@Autowired
-	private OrderService service;
+	private OrderService orderService;
 
 	@BeanInject
 	private OrderProcessor processor;
@@ -27,14 +27,32 @@ public class ApplicationResource extends RouteBuilder {
 		restConfiguration().component("servlet").port(9090).host("localhost")
 				.bindingMode(RestBindingMode.json);
 
-		rest().get("/hello-world").produces(MediaType.APPLICATION_JSON_VALUE).route()
+		rest().get("/hello-world").produces(MediaType.APPLICATION_JSON_VALUE)
+				.route()
 				.setBody(constant("Hello world")).log("Get /hello-world").endRest();
 
-		rest().get("/getOrders").produces(MediaType.APPLICATION_JSON_VALUE).route()
-				.setBody(() -> service.getOrders()).log("Get /getOrders").endRest();
+		rest().get("/getOrders").produces(MediaType.APPLICATION_JSON_VALUE)
+				.route()
+				.setBody(() -> orderService.getOrders())
+				.log("Get /getOrders")
+				.endRest();
 
-		rest().post("/addOrder").consumes(MediaType.APPLICATION_JSON_VALUE).type(Order.class)
-				.outType(Order.class).route().process(processor).log("Post /addOrder").endRest();
+		rest().get("/getOrder/{id}")
+				.produces(MediaType.APPLICATION_JSON_VALUE)
+				.outType(Order.class)
+				.route()
+				.log("Header ${header.id}")
+				.to("bean:orderService?method=getOrderById(${header.id})")
+				.endRest();
+
+		rest().post("/addOrder")
+				.consumes(MediaType.APPLICATION_JSON_VALUE)
+				.type(Order.class)
+				.outType(Order.class)
+				.route()
+				.process(processor)
+				.log("Post /addOrder")
+				.endRest();
 	}
 
 }

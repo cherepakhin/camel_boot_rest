@@ -1,6 +1,7 @@
 package com.javatechie.spring.camel.api.service;
 
 import com.javatechie.spring.camel.api.dto.Order;
+import org.apache.camel.Exchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -35,4 +37,13 @@ public class OrderService {
         return list;
     }
 
+    public Order getOrderById(int id) throws Exception {
+        log.info("OrderService.getOrderById(%s)", id);
+        List<Order> filtered = list.stream().filter(order -> order.getId() == id ).collect(Collectors.toList());
+        if(filtered.size() > 0 ) {
+            return filtered.get(0);
+        } else {
+            throw new Exception(String.format("Order with id=%s NOT FOUND", id));
+        }
+    }
 }
