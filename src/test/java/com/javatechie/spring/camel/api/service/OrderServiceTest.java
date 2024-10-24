@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class OrderServiceTest {
 
@@ -17,6 +17,21 @@ class OrderServiceTest {
         Order order = orderService.getOrderById(67);
 
         assertEquals(new Order(67, "Mobile", 6700), order);
+    }
+
+    @Test
+    void getOrderByNotExistId() throws Exception {
+        OrderService orderService = new OrderService();
+        orderService.initDB();
+        boolean isError = false;
+        try {
+            orderService.getOrderById(-100);
+        } catch (Exception e) {
+            isError = true;
+            assertEquals("Order with id=-100 NOT FOUND", e.getMessage());
+        }
+
+        assertTrue(isError);
     }
 
     @Test
