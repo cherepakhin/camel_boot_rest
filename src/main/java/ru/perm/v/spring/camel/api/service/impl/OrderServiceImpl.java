@@ -49,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
         log.info("OrderService.getOrderById({})", id);
         List<Order> filtered = list.stream().filter(order -> order.getId() == id).collect(Collectors.toList());
         if (filtered.isEmpty()) {
+            log.error(format("Order with id=%s NOT FOUND", id));
             throw new Exception(format("Order with id=%s NOT FOUND", id));
         } else {
             return filtered.get(0);

@@ -10,8 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderProcessor implements Processor {
 
-    @Autowired
     private OrderService service;
+
+    public OrderProcessor(@Autowired OrderService service) {
+        this.service = service;
+    }
 
     @Override
     public void process(Exchange exchange) throws Exception {
