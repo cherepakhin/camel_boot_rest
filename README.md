@@ -135,4 +135,4 @@ $ http :8960/hello-world
 
 ### Интеграционные тесты с RestAssured
 
-[https://github.com/cherepakhin/camel_boot_rest](https://github.com/cherepakhin/camel_boot_rest)
+[https://github.com/cherepakhin/camel_boot_rest_restassured_test](https://github.com/cherepakhin/camel_boot_rest_restassured_test)
