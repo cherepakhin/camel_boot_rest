@@ -6,14 +6,14 @@ run app:
 ./mvnw spring-boot:run
 ````
 
-GET запрос:
+Примеры GET запросов:
 
 ````shell
-http :9090/hello-world
+$ http :9090/hello-world
 
 "Welcome to java techie"
 
-http http://127.0.0.1:9090/getOrders
+$ http http://127.0.0.1:9090/getOrders
 [
     {
         "id": 67,
