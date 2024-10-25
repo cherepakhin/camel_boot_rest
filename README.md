@@ -54,3 +54,34 @@ restConfiguration().component("servlet").port(9090).host("localhost").bindingMod
 
 		rest().post("/addOrder").consumes(MediaType.APPLICATION_JSON_VALUE).type(Order.class).outType(Order.class)
 				.route().process(processor).endRest();
+
+
+### Сборка fat файла
+
+````shell
+./mvnw package
+````
+
+Собранный файл будет в target/camel_boot_rest-0.0.1-jar-with-dependencies.jar
+
+Запуск:
+
+````shell
+java -jar camel_boot_rest-0.0.1.jar
+````
+
+Смена основного порта __9090__ (задан в application.properties) на __8960__:
+
+````shell
+export SPRING_APPLICATION_JSON='{"server":{"port":8960}}'
+java -jar camel_boot_rest-0.0.1.jar
+````
+
+Проверка:
+
+````shell
+$ http :8960/hello-world
+
+"Hello world"
+
+````
