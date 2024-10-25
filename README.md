@@ -34,6 +34,7 @@ http POST :9090/addOrder < temp/new_order.json
 
 ### Dependencies apache camel
 
+````xml
 <dependency>
     <groupId>org.apache.camel</groupId>
     <artifactId>camel-spring-boot-starter</artifactId>
@@ -49,6 +50,7 @@ http POST :9090/addOrder < temp/new_order.json
     <artifactId>camel-jackson</artifactId>
     <version>2.24.0</version>
 </dependency>
+````
 
 ###  Rest APIs
 
