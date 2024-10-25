@@ -1,4 +1,4 @@
-### My tests 20:03:2024
+### Простой проект с Java, Camel, Rest, Spring boot
 
 run app:
 
@@ -132,3 +132,7 @@ $ http :8960/hello-world
 ### Сборка в Jenkins
 
 ![jenkins_build](doc/jenkins_build.png)
+
+### Интеграционные тесты с RestAssured
+
+[https://github.com/cherepakhin/camel_boot_rest](https://github.com/cherepakhin/camel_boot_rest)
