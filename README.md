@@ -49,6 +49,8 @@ How to expose Rest API using Spring Boot with Apache Camel
 </dependency>
 
 ##  Rest APIs
+
+Основная настройка Camel REST в классе: 
 [https://github.com/cherepakhin/camel_boot_rest/blob/main/src/main/java/ru/perm/v/spring/camel/api/resource/ApplicationResource.java](https://github.com/cherepakhin/camel_boot_rest/blob/main/src/main/java/ru/perm/v/spring/camel/api/resource/ApplicationResource.java)
 
 ````java
