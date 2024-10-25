@@ -85,3 +85,7 @@ $ http :8960/hello-world
 "Hello world"
 
 ````
+
+Сборка в Jenkins:
+
+![jenkins_build](doc/jenkins_build.png)
