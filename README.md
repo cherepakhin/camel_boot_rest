@@ -12,7 +12,9 @@ run app:
 $ http :9090/hello-world
 
 "Welcome to java techie"
+````
 
+````shell
 $ http http://127.0.0.1:9090/getOrders
 [
     {
