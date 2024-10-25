@@ -13,7 +13,7 @@ pipeline {
 
         stage('Unit tests') {
             steps {
-                sh 'pwd;cd camel_boot_rest_backend;./mvnw clean test'
+                sh 'pwd;cd camel_boot_rest;./mvnw clean test'
             }
         }
 
