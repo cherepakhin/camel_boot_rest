@@ -139,6 +139,6 @@ $ http :8960/hello-world
 
 ![jenkins_build](doc/jenkins_build.png)
 
-### Интеграционные тесты с RestAssured
+### Интеграционные тесты для этого проекта с RestAssured
 
 [https://github.com/cherepakhin/camel_boot_rest_restassured_test](https://github.com/cherepakhin/camel_boot_rest_restassured_test)
