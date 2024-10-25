@@ -32,10 +32,7 @@ POST запрос:
 http POST :9090/addOrder < temp/new_order.json
 ````
 
-# spring-camel-rest-dsl
-How to expose Rest API using Spring Boot with Apache Camel
-
-## Dependencies we have to add for apache camel
+### Dependencies apache camel
 
 <dependency>
     <groupId>org.apache.camel</groupId>
@@ -53,7 +50,7 @@ How to expose Rest API using Spring Boot with Apache Camel
     <version>2.24.0</version>
 </dependency>
 
-##  Rest APIs
+###  Rest APIs
 
 Основная настройка Camel REST в классе: 
 [https://github.com/cherepakhin/camel_boot_rest/blob/main/src/main/java/ru/perm/v/spring/camel/api/resource/ApplicationResource.java](https://github.com/cherepakhin/camel_boot_rest/blob/main/src/main/java/ru/perm/v/spring/camel/api/resource/ApplicationResource.java)
