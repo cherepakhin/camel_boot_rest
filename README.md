@@ -6,7 +6,7 @@ run app:
 ./mvnw spring-boot:run
 ````
 
-run tests:
+GET запрос:
 
 ````shell
 http :9090/hello-world
@@ -24,8 +24,11 @@ http http://127.0.0.1:9090/getOrders
 ]
 ````
 
-http POST :9090/addOrder < ~/temp/order.json
+POST запрос:
 
+````shell
+http POST :9090/addOrder < temp/new_order.json
+````
 
 # spring-camel-rest-dsl
 How to expose Rest API using Spring Boot with Apache Camel
