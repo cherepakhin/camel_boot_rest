@@ -62,7 +62,7 @@ restConfiguration().component("servlet").port(9090).host("localhost").bindingMod
 ./mvnw package
 ````
 
-Собранный файл будет в target/camel_boot_rest-0.0.1-jar-with-dependencies.jar
+Собранный файл будет в target/camel_boot_rest-0.0.1.jar
 
 Запуск:
 
