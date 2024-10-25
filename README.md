@@ -3,7 +3,7 @@
 run app:
 
 ````shell
-./mvnw spring-boot:run
+$ ./mvnw spring-boot:run
 ````
 
 Примеры GET запросов:
@@ -29,7 +29,7 @@ $ http http://127.0.0.1:9090/getOrders
 POST запрос:
 
 ````shell
-http POST :9090/addOrder < temp/new_order.json
+$ http POST :9090/addOrder < temp/new_order.json
 ````
 
 ### Dependencies apache camel
@@ -108,7 +108,7 @@ public class ApplicationResource extends RouteBuilder {
 ### Сборка fat файла
 
 ````shell
-./mvnw package
+$ ./mvnw package
 ````
 
 Собранный файл будет в target/camel_boot_rest-0.0.1.jar
@@ -116,14 +116,14 @@ public class ApplicationResource extends RouteBuilder {
 Запуск:
 
 ````shell
-java -jar camel_boot_rest-0.0.1.jar
+$ java -jar camel_boot_rest-0.0.1.jar
 ````
 
 Смена основного порта __9090__ (задан в application.properties) на __8960__:
 
 ````shell
-export SPRING_APPLICATION_JSON='{"server":{"port":8960}}'
-java -jar camel_boot_rest-0.0.1.jar
+$ export SPRING_APPLICATION_JSON='{"server":{"port":8960}}'
+$ java -jar camel_boot_rest-0.0.1.jar
 ````
 
 Проверка:
