@@ -55,11 +55,9 @@ public class OrderProcessor implements Processor {
         // host=localhost:9090,
         // user-agent=HTTPie/0.9.8}
 
-        // for example log CamelHttpUri
         log.info("CamelHttpUri={}", exchange.getIn().getHeaders().get("CamelHttpUri"));
         // CamelHttpUri=/addOrder
 
-        // for example log Content-Type
         log.info("Content-Type={}", exchange.getIn().getHeaders().get("Content-Type"));
         // Content-Type=application/json
 
