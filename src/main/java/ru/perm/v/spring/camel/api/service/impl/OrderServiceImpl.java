@@ -1,6 +1,6 @@
 package ru.perm.v.spring.camel.api.service.impl;
 
-import ru.perm.v.spring.camel.api.dto.Order;
+import ru.perm.v.spring.camel.api.dto.OrderDTO;
 import ru.perm.v.spring.camel.api.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,21 +17,23 @@ import static java.lang.String.format;
 public class OrderServiceImpl implements OrderService {
     Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
 
-    private List<Order> list = new ArrayList<>();
+    private List<OrderDTO> list = new ArrayList<>();
 
     @PostConstruct
     public void initDB() {
         list = new ArrayList<>();
         log.info("initDB");
-        list.add(new Order(67, "Mobile", 6700));
-        list.add(new Order(68, "Book", 6800));
-        list.add(new Order(69, "AC", 6900));
-        list.add(new Order(70, "Shoes", 70000));
+        list.add(new OrderDTO(67, "Mobile", 6700));
+        list.add(new OrderDTO(68, "Book", 6800));
+        list.add(new OrderDTO(69, "AC", 6900));
+        list.add(new OrderDTO(70, "Shoes", 70000));
     }
 
 
     @Override
-    public Order addOrder(Order order) {
+    public OrderDTO addOrder(OrderDTO order) {
+        //TODO: verify price < 0
+        //TODO: verify name is empty
         log.info("addOrder {}", order);
         list.add(order);
         return order;
@@ -39,15 +41,15 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public List<Order> getOrders() {
+    public List<OrderDTO> getOrders() {
         log.info("OrderService.getOrders()");
         return list;
     }
 
     @Override
-    public Order getOrderById(int id) throws Exception {
+    public OrderDTO getOrderById(int id) throws Exception {
         log.info("OrderService.getOrderById({})", id);
-        List<Order> filtered = list.stream().filter(order -> order.getId() == id).collect(Collectors.toList());
+        List<OrderDTO> filtered = list.stream().filter(order -> order.getId() == id).collect(Collectors.toList());
         if (filtered.isEmpty()) {
             log.error(format("Order with id=%s NOT FOUND", id));
             throw new Exception(format("Order with id=%s NOT FOUND", id));

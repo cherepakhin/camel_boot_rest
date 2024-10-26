@@ -9,7 +9,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Order {
+public class OrderDTO {
 	
 	private Integer id;
 	private String name;

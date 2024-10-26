@@ -1,14 +1,14 @@
 package ru.perm.v.spring.camel.api.service;
 
-import ru.perm.v.spring.camel.api.dto.Order;
+import ru.perm.v.spring.camel.api.dto.OrderDTO;
 
 import java.util.List;
 
 public interface OrderService {
 
-    Order addOrder(Order order);
+    OrderDTO addOrder(OrderDTO order);
 
-    List<Order> getOrders();
+    List<OrderDTO> getOrders();
 
-    Order getOrderById(int id) throws Exception;
+    OrderDTO getOrderById(int id) throws Exception;
 }

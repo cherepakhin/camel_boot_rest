@@ -1,6 +1,6 @@
 package ru.perm.v.spring.camel.api.resource;
 
-import ru.perm.v.spring.camel.api.dto.Order;
+import ru.perm.v.spring.camel.api.dto.OrderDTO;
 import ru.perm.v.spring.camel.api.processor.OrderProcessor;
 import ru.perm.v.spring.camel.api.service.OrderService;
 import org.apache.camel.BeanInject;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationResource extends RouteBuilder {
 
+    //TODO: rename Order to OrderDTO
 
     @BeanInject
     private OrderService orderService;
@@ -36,16 +37,17 @@ public class ApplicationResource extends RouteBuilder {
 
         rest().get("/getOrder/{id}")
                 .produces(MediaType.APPLICATION_JSON_VALUE)
-                .outType(Order.class)
+                .outType(OrderDTO.class)
                 .route()
                 .log("Header ${header.id}")
                 .to("bean:orderServiceImpl?method=getOrderById(${header.id})")
                 .endRest();
 
         rest().post("/addOrder")
+                .bindingMode(RestBindingMode.json) // ?? log
                 .consumes(MediaType.APPLICATION_JSON_VALUE)
-                .type(Order.class)
-                .outType(Order.class)
+                .type(OrderDTO.class)
+                .outType(OrderDTO.class)
                 .route()
                 .process(processor)
                 .log("Post /addOrder")
