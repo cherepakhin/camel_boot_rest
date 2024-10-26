@@ -36,6 +36,7 @@ public class ApplicationResource extends RouteBuilder {
                 .endRest();
 
         rest().get("/getOrder/{id}")
+                .consumes(MediaType.APPLICATION_JSON_VALUE)
                 .produces(MediaType.APPLICATION_JSON_VALUE)
                 .outType(OrderDTO.class)
                 .route()
@@ -46,6 +47,7 @@ public class ApplicationResource extends RouteBuilder {
         rest().post("/addOrder")
                 .bindingMode(RestBindingMode.json) // ?? log
                 .consumes(MediaType.APPLICATION_JSON_VALUE)
+                .produces(MediaType.APPLICATION_JSON_VALUE)
                 .type(OrderDTO.class)
                 .outType(OrderDTO.class)
                 .route()
