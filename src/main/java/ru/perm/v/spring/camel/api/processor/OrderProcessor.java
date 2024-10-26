@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import ru.perm.v.spring.camel.api.dto.OrderDTO;
 import ru.perm.v.spring.camel.api.service.OrderService;
 
+
 @Component
 public class OrderProcessor implements Processor {
 
@@ -22,25 +23,27 @@ public class OrderProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
+        log.info("From processor exchange.toString()={}", exchange);
         // log: From processor exchange.toString()=Exchange[ID-vasi-note-1729924179587-0-1]
-        log.info("From processor exchange.toString()=" + exchange.toString());
 
+        log.info("From processor exchange.getIn().getBody()={}", exchange.getIn().getBody());
         // log: From processor exchange.getIn().getBody()=OrderDTO(id=70, name=Shoes, price=70000.0)
-        log.info("From processor exchange.getIn().getBody()=" + exchange.getIn().getBody());
 
-        log.info("From processor exchange.getContext()=" + exchange.getContext());
+        log.info("From processor exchange.getContext()={}", exchange.getContext());
         // log: From processor exchange.getContext()=SpringCamelContext(camel-1) with spring id application
 
         //getIn().getBody(OrderDTO.class) - UNMARSHALL, CONVERTING to OrderDTO!!!
-        log.info("From processor: " + exchange.getIn().getBody(OrderDTO.class).toString());
+        log.info("From processor: {}", exchange.getIn().getBody(OrderDTO.class));
         //log: From processor:OrderDTO(id=70, name=Shoes, price=70000.0)
 
-        log.info("Headers: " + exchange.getIn().getHeaders().toString());
-        // log: Headers: {
+        log.info("Headers: {}", exchange.getIn().getHeaders());
+        // Headers:
         // accept=application/json, */*, accept-encoding=gzip, deflate,
         // breadcrumbId=ID-vasi-note-1729924800419-0-1,
         // CamelHttpCharacterEncoding=UTF-8,
-        // CamelHttpMethod=POST, CamelHttpPath=, CamelHttpQuery=null,
+        // CamelHttpMethod=POST,
+        // CamelHttpPath=,
+        // CamelHttpQuery=null,
         // CamelHttpServletRequest=org.apache.catalina.connector.RequestFacade@2916767b,
         // CamelHttpServletResponse=org.apache.catalina.connector.ResponseFacade@5a00e0a4,
         // CamelHttpUri=/addOrder,
@@ -53,9 +56,13 @@ public class OrderProcessor implements Processor {
         // user-agent=HTTPie/0.9.8}
 
         // for example log CamelHttpUri
-        log.info("CamelHttpUri=" + exchange.getIn().getHeaders().get("CamelHttpUri")); // CamelHttpUri=/addOrder
+        log.info("CamelHttpUri={}", exchange.getIn().getHeaders().get("CamelHttpUri"));
+        // CamelHttpUri=/addOrder
+
         // for example log Content-Type
-        log.info("Content-Type=" + exchange.getIn().getHeaders().get("Content-Type")); // Content-Type=application/json
+        log.info("Content-Type={}", exchange.getIn().getHeaders().get("Content-Type"));
+        // Content-Type=application/json
+
 
         OrderDTO dto = exchange.getIn().getBody(OrderDTO.class); // extract DTO (convert, unmarshal, ...)
         orderService.addOrder(dto);
