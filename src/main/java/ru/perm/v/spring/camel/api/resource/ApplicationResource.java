@@ -25,11 +25,13 @@ public class ApplicationResource extends RouteBuilder {
         restConfiguration().component("servlet").port(9090).host("localhost")
                 .bindingMode(RestBindingMode.json);
 
-        rest().get("/hello-world").produces(MediaType.APPLICATION_JSON_VALUE)
+        rest().get("/hello-world")
+                .produces(MediaType.APPLICATION_JSON_VALUE)
                 .route()
                 .setBody(constant("Hello world")).log("Get /hello-world").endRest();
 
-        rest().get("/getOrders").produces(MediaType.APPLICATION_JSON_VALUE)
+        rest().get("/getOrders")
+                .produces(MediaType.APPLICATION_JSON_VALUE)
                 .route()
                 .setBody(() -> orderService.getOrders())
                 .log("Get /getOrders")
@@ -44,15 +46,19 @@ public class ApplicationResource extends RouteBuilder {
                 .to("bean:orderServiceImpl?method=getOrderById(${header.id})")
                 .endRest();
 
-        rest().post("/addOrder")
-                .bindingMode(RestBindingMode.json) // ?? log
+        // test request: $ http POST :9090/addOrder < new_order.json
+        rest().bindingMode(RestBindingMode.json)
                 .consumes(MediaType.APPLICATION_JSON_VALUE)
                 .produces(MediaType.APPLICATION_JSON_VALUE)
+                .post("/addOrder")
                 .type(OrderDTO.class)
                 .outType(OrderDTO.class)
                 .route()
+                .log("Log POST in ApplicationResource /addOrder body=${body}")
+                .log("Extracted OrderDTO from body: body.ID=${body.id}, body.NAME=${body.name}, body.PRICE=${body.price}")
+                // to processor sending Exchange with body (exchange.getIn().getBody(OrderDTO.class))
+                // exchange = body + status + ...
                 .process(processor)
-                .log("Post /addOrder")
                 .endRest();
     }
 

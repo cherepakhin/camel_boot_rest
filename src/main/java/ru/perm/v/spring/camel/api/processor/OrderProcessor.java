@@ -1,29 +1,64 @@
 package ru.perm.v.spring.camel.api.processor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.perm.v.spring.camel.api.dto.OrderDTO;
-import ru.perm.v.spring.camel.api.service.OrderService;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.perm.v.spring.camel.api.dto.OrderDTO;
+import ru.perm.v.spring.camel.api.service.OrderService;
 
 @Component
 public class OrderProcessor implements Processor {
 
     Logger log = LoggerFactory.getLogger(OrderProcessor.class);
 
-    private OrderService service;
+    private OrderService orderService;
 
     public OrderProcessor(@Autowired OrderService service) {
-        this.service = service;
+        this.orderService = service;
     }
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        log.info(exchange.toString());
-        service.addOrder(exchange.getIn().getBody(OrderDTO.class));
+        // log: From processor exchange.toString()=Exchange[ID-vasi-note-1729924179587-0-1]
+        log.info("From processor exchange.toString()=" + exchange.toString());
+
+        // log: From processor exchange.getIn().getBody()=OrderDTO(id=70, name=Shoes, price=70000.0)
+        log.info("From processor exchange.getIn().getBody()=" + exchange.getIn().getBody());
+
+        log.info("From processor exchange.getContext()=" + exchange.getContext());
+        // log: From processor exchange.getContext()=SpringCamelContext(camel-1) with spring id application
+
+        //getIn().getBody(OrderDTO.class) - UNMARSHALL, CONVERTING to OrderDTO!!!
+        log.info("From processor: " + exchange.getIn().getBody(OrderDTO.class).toString());
+        //log: From processor:OrderDTO(id=70, name=Shoes, price=70000.0)
+
+        log.info("Headers: " + exchange.getIn().getHeaders().toString());
+        // log: Headers: {
+        // accept=application/json, */*, accept-encoding=gzip, deflate,
+        // breadcrumbId=ID-vasi-note-1729924800419-0-1,
+        // CamelHttpCharacterEncoding=UTF-8,
+        // CamelHttpMethod=POST, CamelHttpPath=, CamelHttpQuery=null,
+        // CamelHttpServletRequest=org.apache.catalina.connector.RequestFacade@2916767b,
+        // CamelHttpServletResponse=org.apache.catalina.connector.ResponseFacade@5a00e0a4,
+        // CamelHttpUri=/addOrder,
+        // CamelHttpUrl=http://localhost:9090/addOrder,
+        // CamelServletContextPath=/addOrder,
+        // connection=keep-alive,
+        // content-length=54,
+        // Content-Type=application/json,
+        // host=localhost:9090,
+        // user-agent=HTTPie/0.9.8}
+
+        // for example log CamelHttpUri
+        log.info("CamelHttpUri=" + exchange.getIn().getHeaders().get("CamelHttpUri")); // CamelHttpUri=/addOrder
+        // for example log Content-Type
+        log.info("Content-Type=" + exchange.getIn().getHeaders().get("Content-Type")); // Content-Type=application/json
+
+        OrderDTO dto = exchange.getIn().getBody(OrderDTO.class); // extract DTO (convert, unmarshal, ...)
+        orderService.addOrder(dto);
     }
 
 }
