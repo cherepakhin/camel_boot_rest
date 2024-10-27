@@ -117,7 +117,7 @@ $ ./mvnw package
 Запуск:
 
 ````shell
-$ java -jar camel_boot_rest-0.0.1.jar
+$  java -jar target/camel_boot_rest-0.0.1.jar
 ````
 
 Смена основного порта __9090__ (задан в application.properties) на __8960__:

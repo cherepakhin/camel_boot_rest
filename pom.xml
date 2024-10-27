@@ -84,6 +84,8 @@
 				<configuration>
 					<archive>
 						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
 							<mainClass>ru.perm.v.spring.camel.api.CamelRestDslApplication</mainClass>
 						</manifest>
 					</archive>
