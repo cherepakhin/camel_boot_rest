@@ -31,9 +31,10 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public OrderDTO addOrder(OrderDTO order) {
+    public OrderDTO addOrder(OrderDTO order) throws Exception {
         //TODO: verify price < 0
         //TODO: verify name is empty
+        if (order == null) throw new Exception("OrderDTO for ADD is null.");
         log.info("addOrder {}", order);
         list.add(order);
         return order;

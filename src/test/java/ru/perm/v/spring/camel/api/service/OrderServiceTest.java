@@ -78,4 +78,16 @@ class OrderServiceTest {
         assertEquals(oldLength + 1, newLength);
     }
 
+    @Test
+    void checkExceptionForNullOrder() {
+        OrderServiceImpl orderService = new OrderServiceImpl();
+        String errorMessage = "";
+        try {
+            orderService.addOrder(null);
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+
+        assertEquals("OrderDTO for ADD is null.", errorMessage);
+    }
 }

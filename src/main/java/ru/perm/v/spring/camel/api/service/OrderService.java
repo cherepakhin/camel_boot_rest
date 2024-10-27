@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OrderService {
 
-    OrderDTO addOrder(OrderDTO order);
+    OrderDTO addOrder(OrderDTO order) throws Exception;
 
     List<OrderDTO> getOrders();
 
