@@ -59,5 +59,11 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
+    public String resetDB() {
+        initDB();
+        return "OK";
+    }
+
 
 }

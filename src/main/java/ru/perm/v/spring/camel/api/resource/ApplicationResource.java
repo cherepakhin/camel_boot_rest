@@ -29,6 +29,9 @@ public class ApplicationResource extends RouteBuilder {
                 .produces(MediaType.APPLICATION_JSON_VALUE)
                 .route()
                 .setBody(constant("Hello world")).log("Get /hello-world").endRest();
+        rest().get("/reset_db")
+                .route()
+                .setBody(() -> orderService.resetDB()).endRest();
 
         rest().get("/getOrders")
                 .produces(MediaType.APPLICATION_JSON_VALUE)

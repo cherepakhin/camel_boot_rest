@@ -11,4 +11,6 @@ public interface OrderService {
     List<OrderDTO> getOrders();
 
     OrderDTO getOrderById(int id) throws Exception;
+
+    String resetDB();
 }
