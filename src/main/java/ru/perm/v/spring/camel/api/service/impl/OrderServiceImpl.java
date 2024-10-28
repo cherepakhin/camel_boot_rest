@@ -19,7 +19,7 @@ public class OrderServiceImpl implements OrderService {
 
     private List<OrderDTO> list = new ArrayList<>();
 
-    @PostConstruct
+    @PostConstruct // this annotation working ONLY in Spring
     public void initDB() {
         list = new ArrayList<>();
         log.info("initDB");
