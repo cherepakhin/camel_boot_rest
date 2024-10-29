@@ -19,7 +19,9 @@ public class OrderServiceImpl implements OrderService {
 
     private List<OrderDTO> list = new ArrayList<>();
 
-    @PostConstruct // this annotation working ONLY in Spring
+    // annotation @PostConstruct working ONLY with Spring Context. Additionally for constructor.
+    // Activated after main construct, on construct Spring bean.
+    @PostConstruct
     public void initDB() {
         list = new ArrayList<>();
         log.info("initDB");
