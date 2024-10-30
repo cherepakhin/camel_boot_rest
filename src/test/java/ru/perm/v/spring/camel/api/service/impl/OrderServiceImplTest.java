@@ -2,6 +2,7 @@ package ru.perm.v.spring.camel.api.service.impl;
 
 import org.junit.jupiter.api.Test;
 import ru.perm.v.spring.camel.api.dto.OrderDTO;
+import ru.perm.v.spring.camel.api.excpt.OrderDtoNullException;
 
 import java.util.List;
 
@@ -106,7 +107,7 @@ class OrderServiceImplTest {
         String errorMessage = "";
         try {
             orderService.addOrder(null);
-        } catch (Exception e) {
+        } catch (OrderDtoNullException e) {
             errorMessage = e.getMessage();
         }
 

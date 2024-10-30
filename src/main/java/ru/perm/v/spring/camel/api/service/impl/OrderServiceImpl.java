@@ -1,6 +1,7 @@
 package ru.perm.v.spring.camel.api.service.impl;
 
 import ru.perm.v.spring.camel.api.dto.OrderDTO;
+import ru.perm.v.spring.camel.api.excpt.OrderDtoNullException;
 import ru.perm.v.spring.camel.api.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,10 +34,12 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public OrderDTO addOrder(OrderDTO order) throws Exception {
+    public OrderDTO addOrder(OrderDTO order) throws OrderDtoNullException {
         //TODO: verify price < 0
         //TODO: verify name is empty
-        if (order == null) throw new Exception("OrderDTO for ADD is null.");
+        if (order == null) {
+            throw new OrderDtoNullException("OrderDTO for ADD is null.");
+        }
         logger.info("addOrder {}", order);
         list.add(order);
         return order;
