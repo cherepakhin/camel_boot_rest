@@ -11,13 +11,13 @@ import ru.perm.v.spring.camel.api.service.OrderService;
 
 
 @Component
-public class OrderProcessor implements Processor {
+public class OrderProcessorAddOrder implements Processor {
 
-    Logger log = LoggerFactory.getLogger(OrderProcessor.class);
+    Logger log = LoggerFactory.getLogger(OrderProcessorAddOrder.class);
 
     private OrderService orderService;
 
-    public OrderProcessor(@Autowired OrderService service) {
+    public OrderProcessorAddOrder(@Autowired OrderService service) {
         this.orderService = service;
     }
 
@@ -32,7 +32,7 @@ public class OrderProcessor implements Processor {
         log.info("From processor exchange.getContext()={}", exchange.getContext());
         // log: From processor exchange.getContext()=SpringCamelContext(camel-1) with spring id application
 
-        //getIn().getBody(OrderDTO.class) - UNMARSHALL, CONVERTING to OrderDTO!!!
+        //getIn().getBody(OrderDTO.class) - UNMARSHALL, CONVERTING to !!!OrderDTO.class!!!
         log.info("From processor: {}", exchange.getIn().getBody(OrderDTO.class));
         //log: From processor:OrderDTO(id=70, name=Shoes, price=70000.0)
 

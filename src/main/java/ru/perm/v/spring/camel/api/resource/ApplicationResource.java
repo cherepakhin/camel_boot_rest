@@ -1,7 +1,7 @@
 package ru.perm.v.spring.camel.api.resource;
 
 import ru.perm.v.spring.camel.api.dto.OrderDTO;
-import ru.perm.v.spring.camel.api.processor.OrderProcessor;
+import ru.perm.v.spring.camel.api.processor.OrderProcessorAddOrder;
 import ru.perm.v.spring.camel.api.service.OrderService;
 import org.apache.camel.BeanInject;
 import org.apache.camel.builder.RouteBuilder;
@@ -18,7 +18,7 @@ public class ApplicationResource extends RouteBuilder {
     private OrderService orderService;
 
     @BeanInject
-    private OrderProcessor processor;
+    private OrderProcessorAddOrder orderProcessorAddOrder;
 
     @Override
     public void configure() throws Exception {
@@ -48,8 +48,9 @@ public class ApplicationResource extends RouteBuilder {
                 .log("Header ${header.id}")
                 .to("bean:orderServiceImpl?method=getOrderById(${header.id})")
                 .endRest();
-
+        //POST
         // test request: $ http POST :9090/addOrder < new_order.json
+        // link POST on url TO orderProcessor
         rest().bindingMode(RestBindingMode.json)
                 .consumes(MediaType.APPLICATION_JSON_VALUE)
                 .produces(MediaType.APPLICATION_JSON_VALUE)
@@ -61,7 +62,7 @@ public class ApplicationResource extends RouteBuilder {
                 .log("Extracted OrderDTO from body: body.ID=${body.id}, body.NAME=${body.name}, body.PRICE=${body.price}")
                 // to processor sending Exchange with body (exchange.getIn().getBody(OrderDTO.class))
                 // exchange = body + status + ...
-                .process(processor)
+                .process(orderProcessorAddOrder)
                 .endRest();
     }
 
