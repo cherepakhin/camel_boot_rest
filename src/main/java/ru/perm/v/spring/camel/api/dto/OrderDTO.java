@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +18,7 @@ public class OrderDTO {
 	private Integer id;
 	@NotNull(message = "Name may not be null")
 	private String name;
-	private double price;
+	@Min(value = 1, message = "Price must be higher than 1")
+	private Number price;
 
 }
