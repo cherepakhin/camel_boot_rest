@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,6 +14,7 @@ import lombok.ToString;
 public class OrderDTO {
 	
 	private Integer id;
+	@NotNull(message = "Name may not be null")
 	private String name;
 	private double price;
 
