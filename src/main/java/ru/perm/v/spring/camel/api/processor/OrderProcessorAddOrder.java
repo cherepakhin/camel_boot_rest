@@ -61,7 +61,6 @@ public class OrderProcessorAddOrder implements Processor {
         log.info("Content-Type={}", exchange.getIn().getHeaders().get("Content-Type"));
         // Content-Type=application/json
 
-
         OrderDTO dto = exchange.getIn().getBody(OrderDTO.class); // extract DTO (convert, unmarshal, ...)
         orderService.addOrder(dto);
     }
