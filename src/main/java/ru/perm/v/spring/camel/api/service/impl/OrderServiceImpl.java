@@ -1,6 +1,7 @@
 package ru.perm.v.spring.camel.api.service.impl;
 
 import ru.perm.v.spring.camel.api.dto.OrderDTO;
+import ru.perm.v.spring.camel.api.excpt.OrderDtoNotFoundException;
 import ru.perm.v.spring.camel.api.excpt.OrderDtoNullException;
 import ru.perm.v.spring.camel.api.service.OrderService;
 import org.slf4j.Logger;
@@ -57,8 +58,7 @@ public class OrderServiceImpl implements OrderService {
         logger.info("OrderService.getOrderById({})", id);
         List<OrderDTO> filtered = list.stream().filter(order -> order.getId() == id).collect(Collectors.toList());
         if (filtered.isEmpty()) {
-            logger.error("Order with id={} NOT FOUND", id);
-            throw new Exception(format("Order with id=%s NOT FOUND", id));
+            throw new OrderDtoNotFoundException(id);
         } else {
             return filtered.get(0);
         }
