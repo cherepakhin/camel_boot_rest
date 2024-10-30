@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
         //TODO: verify price < 0
         //TODO: verify name is empty
         if (order == null) {
-            throw new OrderDtoNullException("OrderDTO for ADD is null.");
+            throw new OrderDtoNullException();
         }
         logger.info("addOrder {}", order);
         list.add(order);
