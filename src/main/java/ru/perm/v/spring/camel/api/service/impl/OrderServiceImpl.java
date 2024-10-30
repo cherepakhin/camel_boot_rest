@@ -15,7 +15,7 @@ import static java.lang.String.format;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
+    Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     private List<OrderDTO> list = new ArrayList<>();
 
@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
     @PostConstruct
     public void initDB() {
         list = new ArrayList<>();
-        log.info("initDB");
+        logger.info("initDB");
         list.add(new OrderDTO(67, "Mobile", 6700));
         list.add(new OrderDTO(68, "Book", 6800));
         list.add(new OrderDTO(69, "AC", 6900));
@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
         //TODO: verify price < 0
         //TODO: verify name is empty
         if (order == null) throw new Exception("OrderDTO for ADD is null.");
-        log.info("addOrder {}", order);
+        logger.info("addOrder {}", order);
         list.add(order);
         return order;
     }
@@ -45,16 +45,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDTO> getOrders() {
-        log.info("OrderService.getOrders()");
+        logger.info("OrderService.getOrders()");
         return list;
     }
 
     @Override
     public OrderDTO getOrderById(int id) throws Exception {
-        log.info("OrderService.getOrderById({})", id);
+        logger.info("OrderService.getOrderById({})", id);
         List<OrderDTO> filtered = list.stream().filter(order -> order.getId() == id).collect(Collectors.toList());
         if (filtered.isEmpty()) {
-            log.error(format("Order with id=%s NOT FOUND", id));
+            logger.error("Order with id={} NOT FOUND", id);
             throw new Exception(format("Order with id=%s NOT FOUND", id));
         } else {
             return filtered.get(0);

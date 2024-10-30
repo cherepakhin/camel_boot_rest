@@ -13,7 +13,7 @@ import ru.perm.v.spring.camel.api.service.OrderService;
 @Component
 public class OrderProcessorAddOrder implements Processor {
 
-    Logger log = LoggerFactory.getLogger(OrderProcessorAddOrder.class);
+    Logger logger = LoggerFactory.getLogger(OrderProcessorAddOrder.class);
 
     private OrderService orderService;
 
@@ -23,20 +23,20 @@ public class OrderProcessorAddOrder implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        log.info("From processor exchange.toString()={}", exchange);
+        logger.info("From processor exchange.toString()={}", exchange);
         // log: From processor exchange.toString()=Exchange[ID-vasi-note-1729924179587-0-1]
 
-        log.info("From processor exchange.getIn().getBody()={}", exchange.getIn().getBody());
+        logger.info("From processor exchange.getIn().getBody()={}", exchange.getIn().getBody());
         // log: From processor exchange.getIn().getBody()=OrderDTO(id=70, name=Shoes, price=70000.0)
 
-        log.info("From processor exchange.getContext()={}", exchange.getContext());
+        logger.info("From processor exchange.getContext()={}", exchange.getContext());
         // log: From processor exchange.getContext()=SpringCamelContext(camel-1) with spring id application
 
         //getIn().getBody(OrderDTO.class) - UNMARSHALL, CONVERTING to !!!OrderDTO.class!!!
-        log.info("From processor: {}", exchange.getIn().getBody(OrderDTO.class));
+        logger.info("From processor: {}", exchange.getIn().getBody(OrderDTO.class));
         //log: From processor:OrderDTO(id=70, name=Shoes, price=70000.0)
 
-        log.info("Headers: {}", exchange.getIn().getHeaders());
+        logger.info("Headers: {}", exchange.getIn().getHeaders());
         // Headers:
         // accept=application/json, */*, accept-encoding=gzip, deflate,
         // breadcrumbId=ID-vasi-note-1729924800419-0-1,
@@ -55,10 +55,10 @@ public class OrderProcessorAddOrder implements Processor {
         // host=localhost:9090,
         // user-agent=HTTPie/0.9.8}
 
-        log.info("CamelHttpUri={}", exchange.getIn().getHeaders().get("CamelHttpUri"));
+        logger.info("CamelHttpUri={}", exchange.getIn().getHeaders().get("CamelHttpUri"));
         // CamelHttpUri=/addOrder
 
-        log.info("Content-Type={}", exchange.getIn().getHeaders().get("Content-Type"));
+        logger.info("Content-Type={}", exchange.getIn().getHeaders().get("Content-Type"));
         // Content-Type=application/json
 
         OrderDTO dto = exchange.getIn().getBody(OrderDTO.class); // extract DTO (convert, unmarshal, ...)
