@@ -30,7 +30,21 @@ $ http http://127.0.0.1:9090/getOrders
 POST запрос:
 
 ````shell
-$ http POST :9090/addOrder < temp/new_order.json
+$ cat doc/new_order.json 
+{
+  "id": 70,
+  "name": "Shoes",
+  "price": 70000.0
+}
+
+$ http POST :9090/addOrder < doc/new_order.json
+
+{
+    "id": 70,
+    "name": "Shoes",
+    "price": 70000.0
+}
+
 ````
 
 ### Dependencies apache camel
