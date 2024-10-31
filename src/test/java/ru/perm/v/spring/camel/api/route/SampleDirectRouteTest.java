@@ -13,8 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 //@CamelSpringBootTest
 @EnableAutoConfiguration
@@ -26,11 +25,12 @@ public class SampleDirectRouteTest {
 
     @Test
     void toTempFile() throws IOException {
+        Path path = Paths.get("temp/temp_dir/outputfile.txt"); // catalog "temp/temp_dir/" is in project catalog
+        Files.deleteIfExists(path);
+
         producerTemplate.requestBody("direct:toTempFile", "Content abcdef");
-        Path path = Paths.get("file:temp/?fileName=output.txt");
-//        assertTrue(new File("file:temp/temp_dir?fileName=output.txt").isFile());
-//        assertFalse(Files.exists(path));
-//        assertTrue(new File("/simpleOutput/output.txt").exists());
+
+        assertTrue(Files.exists(path));
     }
 
     @Test
@@ -41,12 +41,15 @@ public class SampleDirectRouteTest {
     }
 
     @Test
-    void existTempFileWithPaths() {
+    void existTempFileWithPaths_AbsolutePath() {
         //Paths
         Path path = Paths.get("/home/vasi/temp/temp_file1.txt");
         assertTrue(Files.exists(path)); //OK
         assertTrue(path.toFile().exists()); //OK
+    }
 
+    @Test
+    void existTempFileWithPaths_HomePath() {
         Path pathFromHome = Paths.get("temp/file_in_temp.txt"); // on HOME dir: ~/temp/temp_file.txt
         assertEquals("/home/vasi/prog/java/camel/camel_boot_rest_2023/temp/file_in_temp.txt",
                 pathFromHome.toAbsolutePath().toString()); //OK
