@@ -34,14 +34,16 @@ public class SampleDirectRouteTest {
     }
 
     @Test
-    void existTempFile() {
+    void existTempFileWithFile() {
         //File
-        assertTrue(new File("/home/vasi/temp/temp_file.txt").isFile()); //OK
-        assertTrue(new File("/home/vasi/temp/temp_file.txt").exists()); //OK
+        assertTrue(new File("/home/vasi/temp/temp_file1.txt").isFile()); //OK
         assertTrue(new File("/home/vasi/temp").exists()); //OK
+    }
 
+    @Test
+    void existTempFileWithPaths() {
         //Paths
-        Path path = Paths.get("/home/vasi/temp/temp_file.txt");
+        Path path = Paths.get("/home/vasi/temp/temp_file1.txt");
         assertTrue(Files.exists(path)); //OK
         assertTrue(path.toFile().exists()); //OK
 
@@ -50,6 +52,6 @@ public class SampleDirectRouteTest {
                 pathFromHome.toAbsolutePath().toString()); //OK
 
         assertTrue(pathFromHome.toFile().exists()); //OK
-
     }
+
 }
