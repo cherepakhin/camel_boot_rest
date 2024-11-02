@@ -2,6 +2,7 @@ package ru.perm.v.spring.camel.api.resource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -15,9 +16,9 @@ import ru.perm.v.spring.camel.api.service.OrderService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 
 @EnableAutoConfiguration
 // use props from application main/resource/application.properties. If need test param - create test/resource/application.properties
@@ -44,10 +45,11 @@ class ApplicationResourceMockTest {
 
         assertEquals("\"TEST OK\"", result);
     }
+
     @Test
     void getOrders() {
-        OrderDTO orderDTO1 = new OrderDTO(1,"NAME_1", 10);
-        OrderDTO orderDTO2 = new OrderDTO(2,"NAME_2", 20);
+        OrderDTO orderDTO1 = new OrderDTO(1, "NAME_1", 10);
+        OrderDTO orderDTO2 = new OrderDTO(2, "NAME_2", 20);
         List<OrderDTO> orders = List.of(orderDTO1, orderDTO2);
         when(orderService.getOrders()).thenReturn(orders);
 
@@ -63,5 +65,28 @@ class ApplicationResourceMockTest {
         assertEquals(2, receivedOrders.size());
         assertEquals(orderDTO1, receivedOrders.get(0));
         assertEquals(orderDTO2, receivedOrders.get(1));
+    }
+
+
+    @Test
+    void getOrderById() {
+        int ID = 1;
+        OrderDTO orderDTO1 = new OrderDTO(ID, "NAME_1", 10);
+        try {
+            when(orderService.getOrderById(ID)).thenReturn(orderDTO1);
+        } catch (Exception e) {
+            fail();
+        }
+
+        String json = this.restTemplate.getForObject("http://localhost:" + port + "/getOrderById/" + ID, String.class);
+        ObjectMapper mapper = new ObjectMapper();
+        OrderDTO receivedOrder = null;
+        try {
+            receivedOrder = mapper.readValue(json, OrderDTO.class);
+        } catch (JsonProcessingException e) {
+            fail();
+        }
+
+        assertEquals(orderDTO1, receivedOrder);
     }
 }
