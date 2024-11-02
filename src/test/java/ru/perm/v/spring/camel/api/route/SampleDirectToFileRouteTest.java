@@ -12,13 +12,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 //@CamelSpringBootTest
 @EnableAutoConfiguration
 @SpringBootTest
-public class SampleDirectRouteTest {
+public class SampleDirectToFileRouteTest {
 
     @Autowired
     ProducerTemplate producerTemplate;
@@ -27,34 +28,37 @@ public class SampleDirectRouteTest {
     void toTempFile() throws IOException {
         Path path = Paths.get("temp/temp_dir/outputfile.txt"); // catalog "temp/temp_dir/" is in project catalog
         Files.deleteIfExists(path);
-
-        producerTemplate.requestBody("direct:toTempFile", "Content abcdef");
+        String content = "Content abcdef";
+        producerTemplate.requestBody("direct:toTempFile", content);
 
         assertTrue(Files.exists(path));
+
+        List<String> contentWrited = Files.readAllLines(path);
+        assertEquals(content, contentWrited.get(0));
     }
 
     @Test
     void existTempFileWithFile() {
         //File
-        assertTrue(new File("/home/vasi/temp/temp_file1.txt").isFile()); //OK
-        assertTrue(new File("/home/vasi/temp").exists()); //OK
+        assertTrue(new File("/home/vasi/temp/temp_file1.txt").isFile()); 
+        assertTrue(new File("/home/vasi/temp").exists()); 
     }
 
     @Test
     void existTempFileWithPaths_AbsolutePath() {
-        //Paths
-        Path path = Paths.get("/home/vasi/temp/temp_file1.txt");
-        assertTrue(Files.exists(path)); //OK
-        assertTrue(path.toFile().exists()); //OK
+        Path path = Paths.get("/home/vasi/temp/temp_file1.txt"); // use Paths
+        
+        assertTrue(Files.exists(path));
+        assertTrue(path.toFile().exists());
     }
 
     @Test
     void existTempFileWithPaths_HomePath() {
         Path pathFromHome = Paths.get("temp/file_in_temp.txt"); // on HOME dir: ~/temp/temp_file.txt
         assertEquals("/home/vasi/prog/java/camel/camel_boot_rest_2023/temp/file_in_temp.txt",
-                pathFromHome.toAbsolutePath().toString()); //OK
+                pathFromHome.toAbsolutePath().toString());
 
-        assertTrue(pathFromHome.toFile().exists()); //OK
+        assertTrue(pathFromHome.toFile().exists());
     }
 
 }

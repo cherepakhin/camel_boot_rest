@@ -4,7 +4,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SampleDirectRoute extends RouteBuilder {
+public class SampleDirectToFileRoute extends RouteBuilder {
     public void configure() throws Exception {
         from("direct:toTempFile")
                 .log("Received Message is ${body} and Headers are ${headers}")
