@@ -65,20 +65,12 @@ public class ApplicationResource extends RouteBuilder {
 
         rest().get("/getOrderById/{id}")
                 .produces(MediaType.APPLICATION_JSON_VALUE)
-                .route()
-                .to("bean:orderServiceImpl?method=getOrderById(${header.id})")
-                .log("Get /getOrderById ${header.id}")
-                .endRest();
-
-        // Use Camel method "to" and use "bean"
-        rest().get("/getOrder/{id}")
-                .consumes(MediaType.APPLICATION_JSON_VALUE)
-                .produces(MediaType.APPLICATION_JSON_VALUE)
                 .outType(OrderDTO.class)
                 .route()
                 .log("Header ${header.id}")
                 .to("bean:orderServiceImpl?method=getOrderById(${header.id})")
                 .endRest();
+
         //POST
         // Use Camel method "process"
         // test request: $ http POST :9090/addOrder < new_order.json
