@@ -38,7 +38,7 @@ public class ApplicationResource extends RouteBuilder {
                 .setBody(() -> orderService.resetDB()).endRest();
 
         // use Stream API: () -> orderService.getOrders()
-        rest().get("/getOrders")
+        rest().get("/get_orders")
                 .produces(MediaType.APPLICATION_JSON_VALUE)
                 .route()
                 .setBody(() -> orderService.getOrders())
