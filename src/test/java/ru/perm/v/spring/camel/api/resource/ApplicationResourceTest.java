@@ -18,8 +18,9 @@ class ApplicationResourceTest {
     @Autowired
     OrderService orderService;
 
+    // test @PostConstruct
     @Test
-    void getOrders() {
+    void getOrdersFromPostConstruct() {
         List<OrderDTO> orders = orderService.getOrders();
 
         assertEquals(4, orders.size());
