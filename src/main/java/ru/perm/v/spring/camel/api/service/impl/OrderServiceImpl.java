@@ -36,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO addOrder(OrderDTO order) throws OrderDtoNullException {
+
         //TODO: verify price < 0
         //TODO: verify name is empty
         if (order == null) {
@@ -69,6 +70,4 @@ public class OrderServiceImpl implements OrderService {
         initDB();
         return "OK";
     }
-
-
 }

@@ -27,6 +27,20 @@ $ http http://127.0.0.1:9090/getOrders
 ]
 ````
 
+````shell
+$ http http://127.0.0.1:9090/getOrderById/67
+[
+    {
+        "id": 67,
+        "name": "Mobile",
+        "price": 5000.0
+    },
+....
+]
+````
+
+
+
 POST запрос:
 
 ````shell

@@ -13,6 +13,8 @@ import ru.perm.v.spring.camel.api.dto.OrderDTO;
 import ru.perm.v.spring.camel.api.processor.OrderProcessorAddOrder;
 import ru.perm.v.spring.camel.api.service.OrderService;
 
+import static java.lang.String.format;
+
 @Component
 public class ApplicationResource extends RouteBuilder {
 
@@ -51,13 +53,16 @@ public class ApplicationResource extends RouteBuilder {
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
+                        String strID = exchange.getIn().getHeader("id").toString();
+                        logger.info(format("getOrderByIdWithProcessor %s", strID));
+                        int id = Integer.parseInt(strID);
+                        logger.info(format("id=%s",id));
                         logger.info("getHeaders().keySet().toString(): {}", exchange.getMessage().getHeaders().keySet());
                         // [accept, accept-encoding, breadcrumbId, CamelHttpCharacterEncoding, CamelHttpMethod,
                         // CamelHttpPath, CamelHttpQuery, CamelHttpServletRequest, CamelHttpServletResponse,
                         // CamelHttpUri, CamelHttpUrl, CamelServletContextPath, connection, Content-Type, host, id, user-agent]
-
-                        logger.info("id: {}", exchange.getMessage().getHeaders().get("id"));
-                        //67 for http :9090/getOrderByIdWithProcessor/67
+                        OrderDTO orderDTO = orderService.getOrderById(id);
+                        exchange.getOut().setBody(orderDTO);
                     }
                 })
                 .log("Get /getOrderById ${header.id}")

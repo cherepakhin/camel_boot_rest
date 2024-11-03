@@ -9,11 +9,17 @@ import org.springframework.stereotype.Component;
 import ru.perm.v.spring.camel.api.dto.OrderDTO;
 import ru.perm.v.spring.camel.api.service.OrderService;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import java.util.Set;
+
 
 @Component
 public class OrderProcessorAddOrder implements Processor {
 
     Logger logger = LoggerFactory.getLogger(OrderProcessorAddOrder.class);
+    Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     private OrderService orderService;
 
@@ -62,7 +68,15 @@ public class OrderProcessorAddOrder implements Processor {
         // Content-Type=application/json
 
         OrderDTO dto = exchange.getIn().getBody(OrderDTO.class); // extract DTO (convert, unmarshal, ...)
-        orderService.addOrder(dto);
+
+        //validate
+        Set<ConstraintViolation<OrderDTO>> violations = validator.validate(dto);
+        if(!violations.isEmpty()) {
+            throw new Exception(violations.toString());
+        } else {
+            orderService.addOrder(dto);
+        }
+
     }
 
 }
