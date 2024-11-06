@@ -17,10 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ContextConfiguration(classes = {CamelRestDslApplication.class})
 
 // DON`T DELETE COMMENT
-// this for JUNIT4!!! this prject use JUnit5
+// this for JUNIT4!!! this project use JUnit5
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 //        classes = CamelRestDslApplication.class)
-@ActiveProfiles("DEV")
+@ActiveProfiles("DEV") // in AppConfig.java defined 2 beans (for "DEV" and for "PROD"). This test for "DEV".
+                       // for PROD see AppConfigForProdTest.java
 class AppConfigForDevTest {
     @Autowired
     @Qualifier("defaultOrderDTO")

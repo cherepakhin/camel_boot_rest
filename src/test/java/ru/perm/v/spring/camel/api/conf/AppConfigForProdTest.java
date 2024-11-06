@@ -12,7 +12,8 @@ import ru.perm.v.spring.camel.api.dto.OrderDTO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(SpringExtension.class)
+// SEE comment in AppConfigForDevTest.java!!!
+@ExtendWith(SpringExtension.class) // used JUNIT5
 @ContextConfiguration(classes = {CamelRestDslApplication.class})
 // for junit4
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,classes = CamelRestDslApplication.class)
