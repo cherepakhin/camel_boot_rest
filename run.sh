@@ -9,6 +9,7 @@
 # 2 method:
 # OK
 ./mvnw spring-boot:run
+
 #-------------------------------------------
 # 4. method (build fat jar)
 # ./mvnw package
@@ -21,4 +22,7 @@
 #  camel_boot_rest-0.0.1.jar - 30 735 435 b
 # run
 # java -jar ~/temp/camel_boot_rest-0.0.1.jar
+
+# Profile
+#./mvnw -Dspring.profiles.active=DEV spring-boot:run
 

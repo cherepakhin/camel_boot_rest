@@ -172,6 +172,15 @@ $ http :8960/hello-world
 
 [https://github.com/cherepakhin/camel_boot_rest_restassured_test](https://github.com/cherepakhin/camel_boot_rest_restassured_test)
 
+###  Profile
+
+````shell
+$ ./mvnw -Dspring.profiles.active=DEV spring-boot:run
+````
+
+Пример установки Profile для тестов в ru.perm.v.spring.camel.api.conf.AppConfigForDevTest
+[https://github.com/cherepakhin/camel_boot_rest/blob/main/src/main/java/ru/perm/v/spring/camel/api/conf/ApplicationResource.java](https://github.com/cherepakhin/camel_boot_rest/blob/main/src/main/java/ru/perm/v/spring/camel/api/resource/ApplicationResource.java)
+
 ### TODO
 
 Camel после версии 3.0.0 предоставляет инструменты тестирования Spring Boot с JUnit5. Рекомендуется использовать аннотацию org.apache.camel.test.spring.junit5.CamelSpringBootTest. "This replaces the Junit4 @RunWith annotation using SpringRunner.class or CamelSpringBootRunner.class. To enable autoconfiguration of the Camel context and other Spring boot auto-configurable components, use the annotation"

@@ -2,6 +2,7 @@ package ru.perm.v.spring.camel.api.processor;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,19 @@ public class OrderProcessorAddOrder implements Processor {
         //validate
         Set<ConstraintViolation<OrderDTO>> violations = validator.validate(dto);
         if(!violations.isEmpty()) {
-            throw new Exception(violations.toString());
+            Object[] arrViolation = violations.toArray();
+            logger.error("-------------------");
+            StringBuilder errors = new StringBuilder();
+            for (int i = 0; i < arrViolation.length; i++) {
+                logger.error("+++++++++++++");
+//                logger.error(arrViolation[i].toString());
+                ConstraintViolationImpl violation = (ConstraintViolationImpl) arrViolation[i];
+                logger.error(violation.getMessage());
+                logger.error("+++++++++++++");
+                errors.append("\n").append(violation.getMessage());
+            }
+            logger.error(String.format("-------------------%s", errors.toString()));
+            throw new Exception(errors.toString());
         } else {
             orderService.addOrder(dto);
         }

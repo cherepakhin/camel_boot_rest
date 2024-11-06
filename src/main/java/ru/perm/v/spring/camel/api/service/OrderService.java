@@ -14,4 +14,6 @@ public interface OrderService {
     OrderDTO getOrderById(int id) throws Exception;
 
     String resetDB();
+
+    String deleteOrder(int id) throws Exception;
 }

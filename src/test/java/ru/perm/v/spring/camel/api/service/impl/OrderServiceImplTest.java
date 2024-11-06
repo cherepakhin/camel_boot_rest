@@ -113,4 +113,20 @@ class OrderServiceImplTest {
 
         assertEquals("OrderDTO for ADD is null.", errorMessage);
     }
+
+    @Test
+    void deleteExistOrder() {
+        int ID_DELETE = 70;
+        OrderServiceImpl orderService = new OrderServiceImpl();
+        orderService.initDB();
+        int oldCountOrders = orderService.getOrders().size();
+        try {
+            orderService.deleteOrder(ID_DELETE);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+        assertEquals(oldCountOrders - 1, orderService.getOrders().size());
+        List<OrderDTO> newListOrders = orderService.getOrders();
+        assertFalse(newListOrders.stream().anyMatch(o -> o.getId().equals(ID_DELETE)));
+    }
 }

@@ -93,6 +93,8 @@ public class ApplicationResource extends RouteBuilder {
                 // exchange = body + status + ...
                 .process(orderProcessorAddOrder)
                 .endRest();
+
+        rest().delete("/order/{id}").to("bean:orderServiceImpl?method=getOrderById(${header.id})");
     }
 
 }

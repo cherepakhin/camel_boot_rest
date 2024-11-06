@@ -70,4 +70,12 @@ public class OrderServiceImpl implements OrderService {
         initDB();
         return "OK";
     }
+
+    @Override
+    public String deleteOrder(int id) throws Exception {
+        getOrderById(id); // throw if not found
+        List<OrderDTO> filtered = list.stream().filter(orderDTO -> !orderDTO.getId().equals(id)).collect(Collectors.toList());
+        list = filtered;
+        return "OK";
+    }
 }

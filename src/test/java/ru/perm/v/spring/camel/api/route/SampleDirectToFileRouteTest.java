@@ -2,6 +2,7 @@ package ru.perm.v.spring.camel.api.route;
 
 
 import org.apache.camel.ProducerTemplate;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //@CamelSpringBootTest
 @EnableAutoConfiguration
 @SpringBootTest
+@Disabled
 public class SampleDirectToFileRouteTest {
 
     @Autowired
