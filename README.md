@@ -134,6 +134,21 @@ public class ApplicationResource extends RouteBuilder {
 
 ````
 
+### Интеграционное тестирование
+
+Интеграционные тесты помечены @Tag("integration"). Запуск только интеграционных тестов:
+
+````shell
+$ ./mvnw test -Dgroups="integration"
+````
+
+прогон только unit тестов (исключить интеграционные тесты @Tag("integration")):
+
+````shell
+$ ./mvnw test -DexcludedGroups="integration"
+````
+
+
 ### Сборка fat файла
 
 ````shell

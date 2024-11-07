@@ -15,7 +15,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //@CamelSpringBootTest
 @EnableAutoConfiguration
@@ -42,14 +43,14 @@ public class SampleDirectToFileRouteTest {
     @Test
     void existTempFileWithFile() {
         //File
-        assertTrue(new File("/home/vasi/temp/temp_file1.txt").isFile()); 
-        assertTrue(new File("/home/vasi/temp").exists()); 
+        assertTrue(new File("/home/vasi/temp/temp_file1.txt").isFile());
+        assertTrue(new File("/home/vasi/temp").exists());
     }
 
     @Test
     void existTempFileWithPaths_AbsolutePath() {
         Path path = Paths.get("/home/vasi/temp/temp_file1.txt"); // use Paths
-        
+
         assertTrue(Files.exists(path));
         assertTrue(path.toFile().exists());
     }

@@ -1,5 +1,6 @@
 package ru.perm.v.spring.camel.api.conf;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 //        classes = CamelRestDslApplication.class)
 @ActiveProfiles("DEV") // in AppConfig.java defined 2 beans (for "DEV" and for "PROD"). This test for "DEV".
-                       // for PROD see AppConfigForProdTest.java
+// for PROD see AppConfigForProdTest.java
+@Tag("integration")
 class AppConfigForDevTest {
     @Autowired
     @Qualifier("defaultOrderDTO")

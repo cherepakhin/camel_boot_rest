@@ -10,13 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ValidateOrderDtoTest {
     @Test
     void forNegativePrice() {
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        OrderDTO dto = new OrderDTO(1,"----", -1F);
+        OrderDTO dto = new OrderDTO(1, "----", -1F);
 
         Set<ConstraintViolation<OrderDTO>> violations = validator.validate(dto);
 
