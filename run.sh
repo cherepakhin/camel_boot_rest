@@ -8,7 +8,8 @@
 #-------------------------------------------
 # 2 method:
 # OK
-./mvnw spring-boot:run
+#./mvnw spring-boot:run
+./mvnw -Dspring.profiles.active=DEV spring-boot:run
 
 #-------------------------------------------
 # 4. method (build fat jar)

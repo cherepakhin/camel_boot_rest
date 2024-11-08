@@ -15,7 +15,7 @@ $ ./mvnw clean test
 run app:
 
 ````shell
-$ ./mvnw spring-boot:run
+$ ./mvnw -Dspring.profiles.active=DEV spring-boot:run
 ````
 (см. run.sh)
 
