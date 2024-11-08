@@ -38,9 +38,22 @@ public class ValidatorOrderDTOTest {
         orderDTO.setPrice(0);
         List<ConstraintViolation<OrderDTO>> validations = new ArrayList<>(validator.validate(orderDTO));
 
+        assertEquals(2, validations.size());
+
+        ConstraintViolation<OrderDTO> validation = validations.get(1);
+        assertEquals("Price must be higher than 1", validation.getMessage());
+    }
+
+    @Test
+    void verifyLengthName() {
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setName("NAME");
+        orderDTO.setPrice(1000);
+        List<ConstraintViolation<OrderDTO>> validations = new ArrayList<>(validator.validate(orderDTO));
+
         assertEquals(1, validations.size());
 
         ConstraintViolation<OrderDTO> validation = validations.get(0);
-        assertEquals("Price must be higher than 1", validation.getMessage());
+        assertEquals("The name must be longer than 5 characters", validation.getMessage());
     }
 }
