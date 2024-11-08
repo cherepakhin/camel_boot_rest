@@ -2,28 +2,33 @@ package ru.perm.v.spring.camel.api.resource;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ru.perm.v.spring.camel.api.CamelRestDslApplication;
 import ru.perm.v.spring.camel.api.dto.OrderDTO;
 import ru.perm.v.spring.camel.api.service.OrderService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //@Disabled
 //@EnableAutoConfiguration // use props from application main/resource/application.properties.
 // If need use test param - create test/resource/application.properties
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
-@ContextConfiguration
-//@ExtendWith(SpringExtension.class) // for use JUNIT5
-//@ContextConfiguration(classes = {CamelRestDslApplication.class})
-@ActiveProfiles("PROD")
+//@ContextConfiguration
+@ExtendWith(SpringExtension.class) // for use JUNIT5
+@ContextConfiguration(classes = {CamelRestDslApplication.class})
+@ActiveProfiles("dev")
 @Tag("integration")
 class ApplicationResourceIntegrationTest {
 
@@ -35,6 +40,11 @@ class ApplicationResourceIntegrationTest {
 
     @Autowired
     OrderService orderService;
+
+    @Test
+    void checkLocalServerPort() {
+        assertEquals(9080, port); // see set in application.properties "local.server.port=9080"
+    }
 
     @Test
     void getOrdersFromPostConstruct() {
@@ -55,5 +65,19 @@ class ApplicationResourceIntegrationTest {
         String result = this.restTemplate.getForObject("http://localhost:" + port + "/reset_db", String.class);
 
         assertEquals("\"OK\"", result);
+    }
+
+    @Test
+    void orderAdd() {
+        OrderDTO dto = new OrderDTO(100, "NAME_100", 100);
+        int sizeOrdersBefore = new ArrayList<>(orderService.getOrders()).size();
+        String result = this.restTemplate.postForObject("http://localhost:" + port + "/addOrder", dto, String.class);
+
+        assertEquals("{\"id\":100,\"name\":\"NAME_100\",\"price\":100}", result);
+
+        List<OrderDTO> ordersAfter = orderService.getOrders();
+
+        assertEquals(sizeOrdersBefore + 1, ordersAfter.size());
+        assertTrue(ordersAfter.contains(dto));
     }
 }

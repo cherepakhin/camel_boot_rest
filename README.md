@@ -1,5 +1,17 @@
 ### Простой проект с Java, Camel, Rest, Spring boot
 
+Java 11
+
+````shell
+$ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+````
+
+run test:
+
+````shell
+$ ./mvnw clean test
+````
+
 run app:
 
 ````shell
@@ -139,13 +151,13 @@ public class ApplicationResource extends RouteBuilder {
 Интеграционные тесты помечены @Tag("integration"). Запуск только интеграционных тестов:
 
 ````shell
-$ ./mvnw test -Dgroups="integration"
+$ ./mvnw clean test -Dgroups="integration"
 ````
 
 прогон только unit тестов (исключить интеграционные тесты @Tag("integration")):
 
 ````shell
-$ ./mvnw test -DexcludedGroups="integration"
+$ ./mvnw clean test -DexcludedGroups="integration"
 ````
 
 
@@ -195,6 +207,32 @@ $ ./mvnw -Dspring.profiles.active=DEV spring-boot:run
 
 Пример установки Profile для тестов в ru.perm.v.spring.camel.api.conf.AppConfigForDevTest
 [https://github.com/cherepakhin/camel_boot_rest/blob/main/src/main/java/ru/perm/v/spring/camel/api/conf/ApplicationResource.java](https://github.com/cherepakhin/camel_boot_rest/blob/main/src/main/java/ru/perm/v/spring/camel/api/resource/ApplicationResource.java)
+
+### Maven Report
+
+Генерация отчета о проекте:
+
+В pom.xml добавлена секция:
+
+````shell
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>3.1.2</version>
+			</plugin>
+		</plugins>
+	</reporting>
+````
+
+генерация:
+
+````shell
+$ ./mvnw site
+````
+
+Отчет будет в /target/site/index.html
 
 ### TODO
 

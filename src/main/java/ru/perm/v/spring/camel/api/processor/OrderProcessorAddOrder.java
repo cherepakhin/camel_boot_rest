@@ -6,13 +6,17 @@ import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import ru.perm.v.spring.camel.api.dto.OrderDTO;
+import ru.perm.v.spring.camel.api.excpt.OrderDtoNullException;
 import ru.perm.v.spring.camel.api.service.OrderService;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.util.List;
 import java.util.Set;
 
 
@@ -29,7 +33,7 @@ public class OrderProcessorAddOrder implements Processor {
     }
 
     @Override
-    public void process(Exchange exchange) throws Exception {
+    public void process(Exchange exchange) throws ResponseStatusException {
         logger.info("From processor exchange.toString()={}", exchange);
         // log: From processor exchange.toString()=Exchange[ID-vasi-note-1729924179587-0-1]
 
@@ -72,24 +76,21 @@ public class OrderProcessorAddOrder implements Processor {
 
         //validate
         Set<ConstraintViolation<OrderDTO>> violations = validator.validate(dto);
-        if(!violations.isEmpty()) {
-            Object[] arrViolation = violations.toArray();
+        if (!violations.isEmpty()) {
             logger.error("-------------------");
             StringBuilder errors = new StringBuilder();
-            for (int i = 0; i < arrViolation.length; i++) {
-                logger.error("+++++++++++++");
-//                logger.error(arrViolation[i].toString());
-                ConstraintViolationImpl violation = (ConstraintViolationImpl) arrViolation[i];
+            for (ConstraintViolation<OrderDTO> violation : violations) {
                 logger.error(violation.getMessage());
-                logger.error("+++++++++++++");
                 errors.append("\n").append(violation.getMessage());
             }
-            logger.error(String.format("-------------------%s", errors.toString()));
-            throw new Exception(errors.toString());
+            throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, errors.toString(), new Exception(errors.toString()));
         } else {
-            orderService.addOrder(dto);
+            try {
+                orderService.addOrder(dto);
+            } catch (OrderDtoNullException e) {
+                throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, e.getMessage(), e);
+            }
         }
 
     }
-
 }
