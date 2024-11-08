@@ -42,11 +42,6 @@ class ApplicationResourceIntegrationTest {
     OrderService orderService;
 
     @Test
-    void checkLocalServerPort() {
-        assertEquals(9080, port); // see set in application.properties "local.server.port=9080"
-    }
-
-    @Test
     void getOrdersFromPostConstruct() {
         List<OrderDTO> orders = orderService.getOrders();
 

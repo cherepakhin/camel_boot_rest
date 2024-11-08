@@ -148,7 +148,7 @@ public class ApplicationResource extends RouteBuilder {
 
 ### Интеграционное тестирование
 
-Интеграционные тесты помечены @Tag("integration"). Запуск только интеграционных тестов:
+Интеграционные тесты помечены @Tag("integration"). Запуск ТОЛЬКО интеграционных тестов:
 
 ````shell
 $ ./mvnw clean test -Dgroups="integration"
