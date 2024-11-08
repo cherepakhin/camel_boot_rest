@@ -28,6 +28,7 @@ public class ValidateOrderDtoTest {
         assertEquals(1, listViolations.size());
         assertEquals("Price must be higher than 1", listViolations.get(0).getMessage());
     }
+
     @Test
     void errorForShortNameOrder() {
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
@@ -42,4 +43,21 @@ public class ValidateOrderDtoTest {
         assertEquals(1, listViolations.size());
         assertEquals("The name must be longer than 5 characters", listViolations.get(0).getMessage());
     }
+
+    @Test
+    void errorForShortNameOrderAndNegativePrice() {
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        OrderDTO dto = new OrderDTO(1, "1234", -100);
+
+        Set<ConstraintViolation<OrderDTO>> violations = validator.validate(dto);
+
+        assertFalse(violations.isEmpty());
+        assertEquals(2, violations.size());
+
+        List<ConstraintViolation<OrderDTO>> listViolations = new ArrayList<ConstraintViolation<OrderDTO>>(violations);
+        assertEquals(2, listViolations.size());
+        assertEquals("The name must be longer than 5 characters", listViolations.get(0).getMessage());
+        assertEquals("Price must be higher than 1", listViolations.get(1).getMessage());
+    }
+
 }
