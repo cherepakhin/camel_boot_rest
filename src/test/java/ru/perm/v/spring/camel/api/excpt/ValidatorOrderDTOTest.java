@@ -34,13 +34,13 @@ public class ValidatorOrderDTOTest {
     @Test
     void verifyMininimumPrice() {
         OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setName("NAME");
+        orderDTO.setName("NAME_100");
         orderDTO.setPrice(0);
         List<ConstraintViolation<OrderDTO>> validations = new ArrayList<>(validator.validate(orderDTO));
 
-        assertEquals(2, validations.size());
+        assertEquals(1, validations.size());
 
-        ConstraintViolation<OrderDTO> validation = validations.get(1);
+        ConstraintViolation<OrderDTO> validation = validations.get(0);
         assertEquals("Price must be higher than 1", validation.getMessage());
     }
 

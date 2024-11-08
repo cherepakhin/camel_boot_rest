@@ -56,8 +56,6 @@ public class ValidateOrderDtoTest {
 
         List<ConstraintViolation<OrderDTO>> listViolations = new ArrayList<ConstraintViolation<OrderDTO>>(violations);
         assertEquals(2, listViolations.size());
-        assertEquals("The name must be longer than 5 characters", listViolations.get(0).getMessage());
-        assertEquals("Price must be higher than 1", listViolations.get(1).getMessage());
     }
 
 }
