@@ -2,6 +2,7 @@ package ru.perm.v.spring.camel.api.service.impl;
 
 import org.junit.jupiter.api.Test;
 import ru.perm.v.spring.camel.api.dto.OrderDTO;
+import ru.perm.v.spring.camel.api.excpt.OrderDtoEmptyNameException;
 import ru.perm.v.spring.camel.api.excpt.OrderDtoNegativePriceException;
 import ru.perm.v.spring.camel.api.excpt.OrderDtoNullException;
 
@@ -110,7 +111,7 @@ class OrderServiceImplTest {
             orderService.addOrder(null);
         } catch (OrderDtoNullException e) {
             errorMessage = e.getMessage();
-        } catch (OrderDtoNegativePriceException e) {
+        } catch (OrderDtoNegativePriceException | OrderDtoEmptyNameException e) {
             errorMessage = "NOT CORRECT EXCEPTION";
         }
 
@@ -140,7 +141,7 @@ class OrderServiceImplTest {
         String errorMessage = "";
         try {
             orderService.addOrder(orderDto);
-        } catch (OrderDtoNullException | OrderDtoNegativePriceException e) {
+        } catch (OrderDtoNullException | OrderDtoNegativePriceException | OrderDtoEmptyNameException e) {
             errorMessage = e.getMessage();
         }
 
@@ -154,11 +155,25 @@ class OrderServiceImplTest {
         String errorMessage = "";
         try {
             orderService.addOrder(orderDto);
-        } catch (OrderDtoNullException | OrderDtoNegativePriceException e) {
+        } catch (OrderDtoNullException | OrderDtoNegativePriceException | OrderDtoEmptyNameException e) {
             errorMessage = e.getMessage();
         }
 
         assertEquals("Price in OrderDTO <= 0.", errorMessage);
+    }
+
+    @Test
+    void checkExceptionForEmptyName() {
+        OrderServiceImpl orderService = new OrderServiceImpl();
+        OrderDTO orderDto = new OrderDTO(6700, "", 100);
+        String errorMessage = "";
+        try {
+            orderService.addOrder(orderDto);
+        } catch (OrderDtoNullException | OrderDtoNegativePriceException | OrderDtoEmptyNameException e) {
+            errorMessage = e.getMessage();
+        }
+
+        assertEquals("Name in OrderDTO is empty.", errorMessage);
     }
 
 }

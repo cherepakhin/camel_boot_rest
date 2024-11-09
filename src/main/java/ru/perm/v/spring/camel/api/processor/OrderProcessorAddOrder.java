@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import ru.perm.v.spring.camel.api.dto.OrderDTO;
+import ru.perm.v.spring.camel.api.excpt.OrderDtoEmptyNameException;
 import ru.perm.v.spring.camel.api.excpt.OrderDtoNegativePriceException;
 import ru.perm.v.spring.camel.api.excpt.OrderDtoNullException;
 import ru.perm.v.spring.camel.api.service.OrderService;
@@ -88,7 +89,7 @@ public class OrderProcessorAddOrder implements Processor {
         } else {
             try {
                 orderService.addOrder(dto);
-            } catch (OrderDtoNullException | OrderDtoNegativePriceException e) {
+            } catch (OrderDtoNullException | OrderDtoNegativePriceException | OrderDtoEmptyNameException e) {
                 throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, e.getMessage(), e);
             }
         }

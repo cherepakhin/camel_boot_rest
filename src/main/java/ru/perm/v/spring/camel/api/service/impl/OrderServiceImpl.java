@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.perm.v.spring.camel.api.dto.OrderDTO;
+import ru.perm.v.spring.camel.api.excpt.OrderDtoEmptyNameException;
 import ru.perm.v.spring.camel.api.excpt.OrderDtoNegativePriceException;
 import ru.perm.v.spring.camel.api.excpt.OrderDtoNotFoundException;
 import ru.perm.v.spring.camel.api.excpt.OrderDtoNullException;
@@ -34,10 +35,12 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public OrderDTO addOrder(OrderDTO order) throws OrderDtoNullException, OrderDtoNegativePriceException {
-        //TODO: verify name is empty
+    public OrderDTO addOrder(OrderDTO order) throws OrderDtoNullException, OrderDtoNegativePriceException, OrderDtoEmptyNameException {
         if (order == null) {
             throw new OrderDtoNullException();
+        }
+        if(order.getName() == null || order.getName().isEmpty()) {
+            throw  new OrderDtoEmptyNameException();
         }
         if (order.getPrice().floatValue() <= 0) {
             throw new OrderDtoNegativePriceException();
