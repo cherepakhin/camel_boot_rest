@@ -125,13 +125,27 @@ class OrderServiceImplTest {
         orderService.initDB();
         int oldCountOrders = orderService.getOrders().size();
         try {
-            orderService.deleteOrder(ID_DELETE);
+            orderService.deleteOrderById(ID_DELETE);
         } catch (Exception e) {
             fail(e.getMessage());
         }
         assertEquals(oldCountOrders - 1, orderService.getOrders().size());
         List<OrderDTO> newListOrders = orderService.getOrders();
         assertFalse(newListOrders.stream().anyMatch(o -> o.getId().equals(ID_DELETE)));
+    }
+
+    @Test
+    void deleteNotExistOrder() {
+        int ID_DELETE = 7000;
+        OrderServiceImpl orderService = new OrderServiceImpl();
+        orderService.initDB();
+        String errorMessage = "";
+        try {
+            orderService.deleteOrderById(ID_DELETE);
+        } catch (Exception e) {
+            errorMessage=e.getMessage();
+        }
+        assertEquals("Order with id=7000 NOT FOUND", errorMessage);
     }
 
     @Test

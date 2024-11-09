@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public String deleteOrder(int id) throws Exception {
+    public String deleteOrderById(int id) throws Exception {
         getOrderById(id); // throw if not found
         List<OrderDTO> filtered = list.stream().filter(orderDTO -> !orderDTO.getId().equals(id)).collect(Collectors.toList());
         list = filtered;

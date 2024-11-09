@@ -17,5 +17,5 @@ public interface OrderService {
 
     String resetDB();
 
-    String deleteOrder(int id) throws Exception;
+    String deleteOrderById(int id) throws Exception;
 }
