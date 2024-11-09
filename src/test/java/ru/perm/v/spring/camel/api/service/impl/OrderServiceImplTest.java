@@ -2,6 +2,7 @@ package ru.perm.v.spring.camel.api.service.impl;
 
 import org.junit.jupiter.api.Test;
 import ru.perm.v.spring.camel.api.dto.OrderDTO;
+import ru.perm.v.spring.camel.api.excpt.OrderDtoNegativePriceException;
 import ru.perm.v.spring.camel.api.excpt.OrderDtoNullException;
 
 import java.util.List;
@@ -109,6 +110,8 @@ class OrderServiceImplTest {
             orderService.addOrder(null);
         } catch (OrderDtoNullException e) {
             errorMessage = e.getMessage();
+        } catch (OrderDtoNegativePriceException e) {
+            errorMessage = "NOT CORRECT EXCEPTION";
         }
 
         assertEquals("OrderDTO for ADD is null.", errorMessage);
@@ -129,4 +132,33 @@ class OrderServiceImplTest {
         List<OrderDTO> newListOrders = orderService.getOrders();
         assertFalse(newListOrders.stream().anyMatch(o -> o.getId().equals(ID_DELETE)));
     }
+
+    @Test
+    void checkExceptionForNotCorrectPrice0() {
+        OrderServiceImpl orderService = new OrderServiceImpl();
+        OrderDTO orderDto = new OrderDTO(6700, "Mobile10000", 0);
+        String errorMessage = "";
+        try {
+            orderService.addOrder(orderDto);
+        } catch (OrderDtoNullException | OrderDtoNegativePriceException e) {
+            errorMessage = e.getMessage();
+        }
+
+        assertEquals("Price in OrderDTO <= 0.", errorMessage);
+    }
+
+    @Test
+    void checkExceptionForNegativePrice() {
+        OrderServiceImpl orderService = new OrderServiceImpl();
+        OrderDTO orderDto = new OrderDTO(6700, "Mobile10000", -1);
+        String errorMessage = "";
+        try {
+            orderService.addOrder(orderDto);
+        } catch (OrderDtoNullException | OrderDtoNegativePriceException e) {
+            errorMessage = e.getMessage();
+        }
+
+        assertEquals("Price in OrderDTO <= 0.", errorMessage);
+    }
+
 }

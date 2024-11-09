@@ -1,19 +1,18 @@
 package ru.perm.v.spring.camel.api.service.impl;
 
-import ru.perm.v.spring.camel.api.dto.OrderDTO;
-import ru.perm.v.spring.camel.api.excpt.OrderDtoNotFoundException;
-import ru.perm.v.spring.camel.api.excpt.OrderDtoNullException;
-import ru.perm.v.spring.camel.api.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ru.perm.v.spring.camel.api.dto.OrderDTO;
+import ru.perm.v.spring.camel.api.excpt.OrderDtoNegativePriceException;
+import ru.perm.v.spring.camel.api.excpt.OrderDtoNotFoundException;
+import ru.perm.v.spring.camel.api.excpt.OrderDtoNullException;
+import ru.perm.v.spring.camel.api.service.OrderService;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.lang.String.format;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -35,12 +34,13 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public OrderDTO addOrder(OrderDTO order) throws OrderDtoNullException {
-
-        //TODO: verify price < 0
+    public OrderDTO addOrder(OrderDTO order) throws OrderDtoNullException, OrderDtoNegativePriceException {
         //TODO: verify name is empty
         if (order == null) {
             throw new OrderDtoNullException();
+        }
+        if (order.getPrice().floatValue() <= 0) {
+            throw new OrderDtoNegativePriceException();
         }
         logger.info("addOrder {}", order);
         list.add(order);
