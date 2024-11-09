@@ -89,4 +89,17 @@ class ApplicationResourceIntegrationTest {
         assertEquals(sizeOrdersBefore , ordersAfter.size());
     }
 
+    @Test
+    void orderAddWithEmptyName() {
+        OrderDTO dto = new OrderDTO(100, "", 100);
+        int sizeOrdersBefore = new ArrayList<>(orderService.getOrders()).size();
+        String result = this.restTemplate.postForObject("http://localhost:" + port + "/addOrder", dto, String.class);
+        System.out.println(result);
+        assertTrue(result.contains("The name must be longer than 5 characters"));
+
+        List<OrderDTO> ordersAfter = orderService.getOrders();
+
+        assertEquals(sizeOrdersBefore , ordersAfter.size());
+    }
+
 }
