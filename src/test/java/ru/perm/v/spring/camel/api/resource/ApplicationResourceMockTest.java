@@ -67,7 +67,6 @@ class ApplicationResourceMockTest {
         assertEquals(orderDTO2, receivedOrders.get(1));
     }
 
-
     @Test
     void getOrderById() {
         int ID = 1;
