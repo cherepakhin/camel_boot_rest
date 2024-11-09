@@ -241,3 +241,5 @@ $ ./mvnw site
 
 Camel после версии 3.0.0 предоставляет инструменты тестирования Spring Boot с JUnit5. Рекомендуется использовать аннотацию org.apache.camel.test.spring.junit5.CamelSpringBootTest. "This replaces the Junit4 @RunWith annotation using SpringRunner.class or CamelSpringBootRunner.class. To enable autoconfiguration of the Camel context and other Spring boot auto-configurable components, use the annotation"
 [https://camel.apache.org/components/4.8.x/others/test-spring-junit5.html](https://camel.apache.org/components/4.8.x/others/test-spring-junit5.html)
+
+Описать использование приватных репозиториев и внешних зависимостей (external dto) на примере [https://github.com/cherepakhin/shop_kotlin_extdto](https://github.com/cherepakhin/shop_kotlin_extdto)
