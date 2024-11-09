@@ -6,12 +6,6 @@ Java 11
 $ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ````
 
-run test:
-
-````shell
-$ ./mvnw clean test
-````
-
 run app:
 
 ````shell
@@ -50,8 +44,6 @@ $ http http://127.0.0.1:9090/getOrderById/67
 ....
 ]
 ````
-
-
 
 POST запрос:
 
