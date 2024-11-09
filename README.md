@@ -146,6 +146,16 @@ public class ApplicationResource extends RouteBuilder {
 
 ````
 
+### UNIT тестирование
+
+В тестах проекта два вида тестов unit и интеграционнные. Выполнять тестирование НУЖНО РАЗДЕЛЬНО.   
+
+Прогон только unit тестов (исключить интеграционные тесты @Tag("integration")):
+
+````shell
+$ ./mvnw clean test -DexcludedGroups="integration"
+````
+
 ### Интеграционное тестирование
 
 Интеграционные тесты помечены @Tag("integration"). Запуск ТОЛЬКО интеграционных тестов:
@@ -153,13 +163,6 @@ public class ApplicationResource extends RouteBuilder {
 ````shell
 $ ./mvnw clean test -Dgroups="integration"
 ````
-
-прогон только unit тестов (исключить интеграционные тесты @Tag("integration")):
-
-````shell
-$ ./mvnw clean test -DexcludedGroups="integration"
-````
-
 
 ### Сборка fat файла
 
