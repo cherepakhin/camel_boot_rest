@@ -75,4 +75,18 @@ class ApplicationResourceIntegrationTest {
         assertEquals(sizeOrdersBefore + 1, ordersAfter.size());
         assertTrue(ordersAfter.contains(dto));
     }
+
+    @Test
+    void orderAddWithNegativePrice() {
+        OrderDTO dto = new OrderDTO(100, "NAME_100", -100);
+        int sizeOrdersBefore = new ArrayList<>(orderService.getOrders()).size();
+        String result = this.restTemplate.postForObject("http://localhost:" + port + "/addOrder", dto, String.class);
+        System.out.println(result);
+        assertTrue(result.contains("Price must be higher than 1"));
+
+        List<OrderDTO> ordersAfter = orderService.getOrders();
+
+        assertEquals(sizeOrdersBefore , ordersAfter.size());
+    }
+
 }
