@@ -29,8 +29,10 @@ public class SampleDirectToFileRouteTest {
 
     @Test
     void toTempFile() throws IOException {
+        // before. clear old test result
         Path path = Paths.get("temp/temp_dir/outputfile.txt"); // catalog "temp/temp_dir/" is in project catalog
         Files.deleteIfExists(path);
+
         String content = "Content abcdef";
         producerTemplate.requestBody("direct:toTempFile", content);
 
