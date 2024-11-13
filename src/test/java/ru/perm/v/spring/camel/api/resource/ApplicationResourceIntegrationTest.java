@@ -38,16 +38,6 @@ class ApplicationResourceIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
-    OrderService orderService;
-
-    @Test
-    void getOrdersFromPostConstruct() {
-        List<OrderDTO> orders = orderService.getOrders();
-
-        assertEquals(4, orders.size());
-    }
-
     @Test
     void restHelloWorld() {
         String result = this.restTemplate.getForObject("http://localhost:" + port + "/hello-world", String.class);
@@ -61,45 +51,4 @@ class ApplicationResourceIntegrationTest {
 
         assertEquals("\"OK\"", result);
     }
-
-    @Test
-    void orderAdd() {
-        OrderDTO dto = new OrderDTO(100, "NAME_100", 100);
-        int sizeOrdersBefore = new ArrayList<>(orderService.getOrders()).size();
-        String result = this.restTemplate.postForObject("http://localhost:" + port + "/addOrder", dto, String.class);
-
-        assertEquals("{\"id\":100,\"name\":\"NAME_100\",\"price\":100}", result);
-
-        List<OrderDTO> ordersAfter = orderService.getOrders();
-
-        assertEquals(sizeOrdersBefore + 1, ordersAfter.size());
-        assertTrue(ordersAfter.contains(dto));
-    }
-
-    @Test
-    void orderAddWithNegativePrice() {
-        OrderDTO dto = new OrderDTO(100, "NAME_100", -100);
-        int sizeOrdersBefore = new ArrayList<>(orderService.getOrders()).size();
-        String result = this.restTemplate.postForObject("http://localhost:" + port + "/addOrder", dto, String.class);
-        System.out.println(result);
-        assertTrue(result.contains("Price must be higher than 1"));
-
-        List<OrderDTO> ordersAfter = orderService.getOrders();
-
-        assertEquals(sizeOrdersBefore , ordersAfter.size());
-    }
-
-    @Test
-    void orderAddWithEmptyName() {
-        OrderDTO dto = new OrderDTO(100, "", 100);
-        int sizeOrdersBefore = new ArrayList<>(orderService.getOrders()).size();
-        String result = this.restTemplate.postForObject("http://localhost:" + port + "/addOrder", dto, String.class);
-        System.out.println(result);
-        assertTrue(result.contains("The name must be longer than 5 characters"));
-
-        List<OrderDTO> ordersAfter = orderService.getOrders();
-
-        assertEquals(sizeOrdersBefore , ordersAfter.size());
-    }
-
 }

@@ -1,4 +1,4 @@
-package ru.perm.v.spring.camel.api.resource;
+package ru.perm.v.spring.camel.api.rest;
 
 import org.apache.camel.BeanInject;
 import org.apache.camel.Exchange;
@@ -16,9 +16,8 @@ import ru.perm.v.spring.camel.api.service.OrderService;
 import static java.lang.String.format;
 
 @Component
-public class ApplicationResource extends RouteBuilder {
-
-    Logger logger = LoggerFactory.getLogger(ApplicationResource.class);
+public class OrderRest extends RouteBuilder {
+    private Logger logger = LoggerFactory.getLogger(OrderRest.class);
 
     @BeanInject
     private OrderService orderService;
@@ -96,5 +95,4 @@ public class ApplicationResource extends RouteBuilder {
 
         rest().delete("/order/{id}").to("bean:orderServiceImpl?method=getOrderById(${header.id})");
     }
-
 }
